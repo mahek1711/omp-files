@@ -110,6 +110,10 @@ void processWordsfromFile(long int fsize)
 		}
 	}
 
+	for(int i=0;i<windex;i++){
+		printf("%s %d\n", word[i].wstring, word[i].count);
+	}
+
 }
 
 #if 0
