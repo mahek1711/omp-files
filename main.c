@@ -93,7 +93,7 @@ void processWordsfromFile(long int fsize)
 	
 	for(int i = 0; i < count; i++)
 	{
-		printf("arr[%d] = %s with index %d\n", i, arr[i], windex);
+		printf("arr[%d] = %s with index %s\n", i, arr[i], word[0].wstring);
 		for(int j=0;j<=windex;j++)
 		{
 			if(strcmp(arr[i], word[j].wstring) == 0)
