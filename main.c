@@ -90,7 +90,7 @@ void processWordsfromFile(long int fsize)
 				count++;
                }
         }
-	# pragma omp parallel for
+	# pragma omp parallel for num_threads(1)
 	for(int i = 0; i < count; i++)
 	{
 		int flag = 0;
