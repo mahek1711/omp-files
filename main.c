@@ -61,7 +61,7 @@ void processWordsfromFile(long int fsize)
         char *token = strtok_r(rest, delim, &rest);
 
 		int count = 0;
-		int arr[SIZE];
+		char *arr[SIZE];
         for (; token; token = strtok_r(rest, delim, &rest)) {
                 if ((int)strlen(token) >= 6) {
                 // if (windex == 0) {
