@@ -60,6 +60,8 @@ void processWordsfromFile(long int fsize)
         char *rest = buffer;
         char *token = strtok_r(rest, delim, &rest);
 
+		int count = 0;
+		int arr[SIZE];
         for (; token; token = strtok_r(rest, delim, &rest)) {
                 if ((int)strlen(token) >= 6) {
                 // if (windex == 0) {
@@ -84,9 +86,16 @@ void processWordsfromFile(long int fsize)
                 //                 windex++;
                 //          }
                 //     }
-				printf("token = %s\n", token);
+				arr[count] = token;
+				count++;
                }
         }
+	
+	for(int i = 0; i < count; i++)
+	{
+		printf("%s\n", arr[i]);
+	}
+	printf("count = %d\n", count);
 
 }
 
