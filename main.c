@@ -93,9 +93,22 @@ void processWordsfromFile(long int fsize)
 	
 	for(int i = 0; i < count; i++)
 	{
-		printf("%s\n", arr[i]);
+		for(int j=0;j<windex;j++)
+		{
+			if(strcmp(arr[i], word[j].wstring) == 0)
+			{
+				word[j].count++;
+				break;
+			}
+			else if(j == windex-1)
+			{
+				strcpy(word[windex].wstring, arr[i]);
+				word[windex].len = strlen(word[windex].wstring);
+				word[windex].count++;
+				windex++;
+			}
+		}
 	}
-	printf("count = %d\n", count);
 
 }
 
