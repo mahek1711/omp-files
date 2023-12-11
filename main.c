@@ -413,7 +413,11 @@ int main (int argc, char *argv[])
                         printf("Error in Creating the threads\n");
                         exit(-5);
                 }*/
-
+	#pragma omp parallel{
+		int nthreads = omp_get_num_threads();
+		int thread_id = omp_get_thread_num();
+		printf("thread %d of %d checking in. \n", thread_id, nthreads);
+	}
     processWordsfromFile(fsize);
 
         //Sorting Words in Descending Order Based on Frequency Count
