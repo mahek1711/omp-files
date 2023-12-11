@@ -90,7 +90,9 @@ void processWordsfromFile(long int fsize)
 				count++;
                }
         }
-	# pragma omp parallel for
+
+		
+	#pragma omp parallel for
 	for(int i = 0; i < count; i++)
 	{
 		for(int j=0;j<=windex;j++)
@@ -98,10 +100,9 @@ void processWordsfromFile(long int fsize)
 			if(windex!=0 && !strcmp(arr[i], word[j].wstring))
 			{
 				word[j].count++;
-				flag=1;
 				break;
 			}
-			if(flag==0)
+			else if(j==windex)
 			{
 				windex++;
 				strcpy(word[windex].wstring, arr[i]);
@@ -284,7 +285,7 @@ int main (int argc, char *argv[])
         exit(-1);
     }
 
-    //threadCount = atoi(argv[2]);
+    threadCount = atoi(argv[2]);
     strcpy(fileName, argv[1]);
 
         // Opening the File name to Read the Content
@@ -427,6 +428,13 @@ int main (int argc, char *argv[])
             }
         }
     }
+
+	#pragma omp parallel num_threads(threadCount)
+	{
+		int nthreads = omp_get_num_threads();
+		int thread_id = omp_get_thread_num();
+		printf("thread %d of %d checking in. \n", thread_id, nthreads);
+	}
 
     // Printing top 10 word with string length of six or more charcaters
     printf("\n\n");
