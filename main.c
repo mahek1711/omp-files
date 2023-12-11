@@ -90,10 +90,9 @@ void processWordsfromFile(long int fsize)
 				count++;
                }
         }
-	# pragma omp parallel for num_threads(3)
+	# pragma omp parallel for
 	for(int i = 0; i < count; i++)
 	{
-		int flag = 0;
 		for(int j=0;j<=windex;j++)
 		{
 			if(windex!=0 && !strcmp(arr[i], word[j].wstring))
@@ -102,8 +101,7 @@ void processWordsfromFile(long int fsize)
 				flag=1;
 				break;
 			}
-		}
-		if(flag==0)
+			if(flag==0)
 			{
 				windex++;
 				strcpy(word[windex].wstring, arr[i]);
@@ -111,6 +109,7 @@ void processWordsfromFile(long int fsize)
 				word[windex].count++;
 				
 			}
+		}
 	}
 	
 
