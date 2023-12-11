@@ -59,17 +59,7 @@ void processWordsfromFile(long int fsize)
 
         char *rest = buffer;
         char *token = strtok_r(rest, delim, &rest);
-
-        #pragma omp parallel
-        {
-                int nthreads = omp_get_num_threads();
-                printf("Total threads = %d\n",nthreads);
-                nthreads = 4;
-                int thread_id = omp_get_thread_num();
-                printf("thread %d of %d checking in. \n", thread_id, nthreads);
-        }
-
-        #pragma omp for
+		
         for (; token; token = strtok_r(rest, delim, &rest)) {
                 if ((int)strlen(token) >= 6) {
                 if (windex == 0) {
@@ -365,7 +355,7 @@ int main (int argc, char *argv[])
         // Creating Threads based on thread Count
     //printf("ThreadCount = %d\n", threadCount);
     //pthread_t threadId[threadCount];
-    pthread_t threadId;
+    // pthread_t threadId;
     //int *test[threadCount];
     //int *test = malloc(sizeof(int));
 #if 0
