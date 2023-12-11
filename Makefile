@@ -33,32 +33,26 @@
 # will delete the executable and any object files in your directory.
 #
 
-FIRSTNAME=Mahek
-LASTNAME=Delawala
-HW=4
-
-ROOTNAME=$(LASTNAME)_$(FIRSTNAME)_HW
-
-FOPTION=_main
+FOPTION=main
 RUNOPTIONS=WarAndPeace.txt 2
 CC=gcc
 CFLAGS= -g -I.
 LIBS =-l pthread -fopenmp
 DEPS = 
-OBJ = $(ROOTNAME)$(HW)$(FOPTION).o
+OBJ = $(FOPTION).o
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS) 
 
-$(ROOTNAME)$(HW)$(FOPTION): $(OBJ)
+$(FOPTION): $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 
 clean:
-	rm *.o $(ROOTNAME)$(HW)$(FOPTION)
+	rm *.o $(FOPTION)
 
-run: $(ROOTNAME)$(HW)$(FOPTION)
-	./$(ROOTNAME)$(HW)$(FOPTION) $(RUNOPTIONS)
+run: $(FOPTION)
+	./$(FOPTION) $(RUNOPTIONS)
 
-vrun: $(ROOTNAME)$(HW)$(FOPTION)
-	valgrind ./$(ROOTNAME)$(HW)$(FOPTION) $(RUNOPTIONS)
+vrun: $(FOPTION)
+	valgrind ./$(FOPTION) $(RUNOPTIONS)
 
