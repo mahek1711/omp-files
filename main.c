@@ -59,31 +59,32 @@ void processWordsfromFile(long int fsize)
 
         char *rest = buffer;
         char *token = strtok_r(rest, delim, &rest);
-		
+
         for (; token; token = strtok_r(rest, delim, &rest)) {
                 if ((int)strlen(token) >= 6) {
-                if (windex == 0) {
-                        strcpy(word[windex].wstring, token);
-                        word[windex].len = strlen(word[windex].wstring);
-                        word[windex].count++;
-                        windex++;
-                } else {
-                        int res = -1;
-                        for (int p = 0; p < windex; p++) {
-                                res = strcmp(word[p].wstring, token);
-                                if (res == 0) {
-                                word[p].count++;
-                                break;
-                        }
-                    }
+                // if (windex == 0) {
+                //         strcpy(word[windex].wstring, token);
+                //         word[windex].len = strlen(word[windex].wstring);
+                //         word[windex].count++;
+                //         windex++;
+                // } else {
+                //         int res = -1;
+                //         for (int p = 0; p < windex; p++) {
+                //                 res = strcmp(word[p].wstring, token);
+                //                 if (res == 0) {
+                //                 word[p].count++;
+                //                 break;
+                //         }
+                //     }
 
-                        if (res != 0) {
-                                strcpy(word[windex].wstring, token);
-                                word[windex].len = strlen(word[windex].wstring);
-                                word[windex].count++;
-                                windex++;
-                         }
-                    }
+                //         if (res != 0) {
+                //                 strcpy(word[windex].wstring, token);
+                //                 word[windex].len = strlen(word[windex].wstring);
+                //                 word[windex].count++;
+                //                 windex++;
+                //          }
+                //     }
+				printf("token = %s\n", token);
                }
         }
 
@@ -435,7 +436,7 @@ int main (int argc, char *argv[])
 
     // ***TO DO *** cleanup
 
-        pthread_mutex_destroy(&lock); // Destroying The Mutex
+        // pthread_mutex_destroy(&lock); // Destroying The Mutex
     close(fd); // closing File Descriptors
     free(buffer); // Releasing Buffer
         buffer = NULL;
