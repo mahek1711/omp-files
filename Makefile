@@ -43,7 +43,7 @@ FOPTION=_main
 RUNOPTIONS=WarAndPeace.txt 2
 CC=gcc
 CFLAGS= -g -I.
-LIBS =-l pthread
+LIBS =-l pthread -fopenmp
 DEPS = 
 OBJ = $(ROOTNAME)$(HW)$(FOPTION).o
 
