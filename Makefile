@@ -5,7 +5,7 @@ CC=g++
 CFLAGS=-fopenmp
 
 # Target
-TARGET=new
+TARGET=main
 
 # Source files
 SRC=parallel.c
