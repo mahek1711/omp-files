@@ -92,7 +92,18 @@ void processWordsfromFile(long int fsize)
 	{
 		for(int j=0;j<=windex;j++)
 		{
-                        printf("i = %d\n",i);
+            if(j!=windex && !strcmp(word[j].wstring,arr[i]))
+            {
+                word[j].count++;
+                break;
+            }
+            else if(j==windex)
+            {
+                strcpy(word[windex].wstring,arr[i]);
+                word[windex].len = strlen(word[windex].wstring);
+                word[windex].count++;
+                windex++;
+            }
 		}
 	}
 	
@@ -152,7 +163,7 @@ int main(int argc, char** argv){
     clock_gettime(CLOCK_REALTIME, &startTime);
     //**************************************************************
 
-    // processWordsfromFile(fsize);
+    processWordsfromFile(fsize);
 
     struct wordlist temp_storage;
     for (int m = 0; m < windex; m++)
