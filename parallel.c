@@ -169,7 +169,7 @@ int main(int argc, char** argv){
 
     // Printing top 10 word with string length of six or more charcaters
     printf("\n\n");
-    printf("Word Frequency Count with %d threads\n", omp_num_threads());
+    printf("Word Frequency Count with %d threads\n", omp_get_num_threads());
     printf("Printing top 10 words 6 characters or more.\n");
 
     for (int p = 0; p < 10; p++)
