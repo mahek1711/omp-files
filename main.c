@@ -272,7 +272,7 @@ int main (int argc, char *argv[])
                 printf("Insufficient arguments on the command line\n");
         exit(-1);
     }
-    fileName="WarAndPeace.txt"
+    fileName="WarAndPeace.txt";
 
         // Opening the File name to Read the Content
     fd = open(fileName, O_RDONLY);
