@@ -10,7 +10,7 @@
 #define SIZE    50000   // Macro for Total Number of Words
 
 // You may find this Useful
-char * delim = "\"\'.“”‘’?:;-,—*($%)! \t\n\x0A\r";
+const char * delim = "\"\'.“”‘’?:;-,—*($%)! \t\n\x0A\r";
 
 // Structure to store the Word, it's frequency and Length
 struct wordlist {
@@ -169,8 +169,7 @@ int main(int argc, char** argv){
 
     // Printing top 10 word with string length of six or more charcaters
     printf("\n\n");
-    printf("Word Frequency Count on %s with %d threads\n",
-                                        argv[1], threadCount);
+    printf("Word Frequency Count with %d threads\n", omp_num_threads());
     printf("Printing top 10 words 6 characters or more.\n");
 
     for (int p = 0; p < 10; p++)
