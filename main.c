@@ -401,7 +401,7 @@ int main (int argc, char *argv[])
                         printf("Error in Creating the threads\n");
                         exit(-5);
                 }*/
-    processWordsfromFile(fsize);
+//     processWordsfromFile(fsize);
 
         //Sorting Words in Descending Order Based on Frequency Count
     struct wordlist temp_storage;
