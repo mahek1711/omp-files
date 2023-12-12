@@ -272,9 +272,7 @@ int main (int argc, char *argv[])
                 printf("Insufficient arguments on the command line\n");
         exit(-1);
     }
-
-    threadCount = atoi(argv[2]);
-    strcpy(fileName, argv[1]);
+    fileName="WarAndPeace.txt"
 
         // Opening the File name to Read the Content
     fd = open(fileName, O_RDONLY);
@@ -401,6 +399,10 @@ int main (int argc, char *argv[])
                         printf("Error in Creating the threads\n");
                         exit(-5);
                 }*/
+         #pragma omp parallel
+    {
+        printf(“Hello from process: %d\n”, omp_get_thread_num());
+    }
 //     processWordsfromFile(fsize);
 
         //Sorting Words in Descending Order Based on Frequency Count
