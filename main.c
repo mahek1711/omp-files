@@ -260,7 +260,7 @@ int main (int argc, char *argv[])
     //***TO DO***  Look at arguments, open file, divide by threads
     // Allocate and Initialize and storage structures
 
-    char fileName[20] = {'\0'};
+    char fileName[] = "WarAndPeace.txt";
 
     int error;
     size_t start_offset = 0;
@@ -272,7 +272,6 @@ int main (int argc, char *argv[])
                 printf("Insufficient arguments on the command line\n");
         exit(-1);
     }
-    fileName="WarAndPeace.txt";
 
         // Opening the File name to Read the Content
     fd = open(fileName, O_RDONLY);
