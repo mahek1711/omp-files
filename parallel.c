@@ -4,9 +4,26 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
-#include <pthread.h>
 #include <string.h>
 #include <omp.h>
+
+#define SIZE    50000   // Macro for Total Number of Words
+
+// You may find this Useful
+char * delim = "\"\'.“”‘’?:;-,—*($%)! \t\n\x0A\r";
+
+// Structure to store the Word, it's frequency and Length
+struct wordlist {
+        char wstring[50];
+        int count;
+        int len;
+};
+
+struct wordlist word[SIZE]; // Array of Structure to Store Words
+int fd;         // File Descriptor
+long int fsize;         // File Size 
+int windex = 0;
+char *buffer;
 
 void processWordsfromFile(long int fsize)
 {
