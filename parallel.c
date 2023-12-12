@@ -86,24 +86,25 @@ void processWordsfromFile(long int fsize)
                }
         }
 
-		
-	#pragma omp parallel for
+
+    #pragma omp parallel for
 	for(int i = 0; i < count; i++)
 	{
 		for(int j=0;j<=windex;j++)
 		{
-            if(j!=windex && !strcmp(word[j].wstring,arr[i]))
-            {
-                word[j].count++;
-                break;
-            }
-            else if(j==windex)
-            {
-                strcpy(word[windex].wstring,arr[i]);
-                word[windex].len = strlen(word[windex].wstring);
-                word[windex].count++;
-                windex++;
-            }
+            // if(j!=windex && !strcmp(word[j].wstring,arr[i]))
+            // {
+            //     word[j].count++;
+            //     break;
+            // }
+            // else if(j==windex)
+            // {
+            //     strcpy(word[windex].wstring,arr[i]);
+            //     word[windex].len = strlen(word[windex].wstring);
+            //     word[windex].count++;
+            //     windex++;
+            // }
+            printf("Hello from process: %d\n", omp_get_thread_num());
 		}
 	}
 	
@@ -115,7 +116,6 @@ int main(int argc, char** argv){
     {
         printf("Hello from process: %d\n", omp_get_thread_num());
     }
-    return 0;
 
     char fileName[] = "WarAndPeace.txt";
 
