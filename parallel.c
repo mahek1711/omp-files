@@ -86,26 +86,27 @@ void processWordsfromFile(long int fsize)
                }
         }
 
-
     #pragma omp parallel for
 	for(int i = 0; i < count; i++)
 	{
-		// for(int j=0;j<=windex;j++)
-		// {
-        //     if(j==windex)
-        //     {
-        //         strcpy(word[windex].wstring,arr[i]);
-        //         word[windex].len = strlen(word[windex].wstring);
-        //         word[windex].count++;
-        //         windex++;
-        //     }
-        //     else if(!strcmp(word[j].wstring,arr[i]))
-        //     {
-        //         word[j].count++;
-        //         break;
-        //     }
-		// }
-        printf("Word: %s\n",arr[i]);
+		for(int j=0;j<=windex;j++)
+		{
+            if(j!=windex)
+            {
+                if(strcmp(arr[i],word[j].wstring)==0)
+                {
+                    word[j].count++;
+                    break;
+                }
+            }
+            else
+            {
+                strcpy(word[windex].wstring, arr[i]);
+                word[windex].len = strlen(word[windex].wstring);
+                word[windex].count++;
+                windex++;
+            }
+		}
 	}
 	
 
