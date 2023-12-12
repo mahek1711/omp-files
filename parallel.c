@@ -59,28 +59,6 @@ void processWordsfromFile(long int fsize)
 		char *arr[SIZE];
         for (; token; token = strtok_r(rest, delim, &rest)) {
                 if ((int)strlen(token) >= 6) {
-                // if (windex == 0) {
-                //         strcpy(word[windex].wstring, token);
-                //         word[windex].len = strlen(word[windex].wstring);
-                //         word[windex].count++;
-                //         windex++;
-                // } else {
-                //         int res = -1;
-                //         for (int p = 0; p < windex; p++) {
-                //                 res = strcmp(word[p].wstring, token);
-                //                 if (res == 0) {
-                //                 word[p].count++;
-                //                 break;
-                //         }
-                //     }
-
-                //         if (res != 0) {
-                //                 strcpy(word[windex].wstring, token);
-                //                 word[windex].len = strlen(word[windex].wstring);
-                //                 word[windex].count++;
-                //                 windex++;
-                //          }
-                //     }
 				arr[count] = token;
 				count++;
                }
