@@ -97,19 +97,7 @@ void processWordsfromFile(long int fsize)
 	{
 		for(int j=0;j<=windex;j++)
 		{
-			if(windex!=0 && !strcmp(arr[i], word[j].wstring))
-			{
-				word[j].count++;
-				break;
-			}
-			else if(j==windex)
-			{
-				windex++;
-				strcpy(word[windex].wstring, arr[i]);
-				word[windex].len = strlen(word[windex].wstring);
-				word[windex].count++;
-				
-			}
+                        printf("i = %d\n",i);
 		}
 	}
 	
