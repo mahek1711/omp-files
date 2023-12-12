@@ -91,7 +91,7 @@ void processWordsfromFile(long int fsize)
 	{
 		for(int j=0;j<=windex;j++)
 		{
-            printf("Word %s is checked against %s\n", arr[i], word[j].wstring);
+            printf("Word %s is checked against %s for i=%d and j=%d\n", arr[i], word[j].wstring, i, j);
             if(j!=windex)
             {
                 if(strcmp(arr[i],word[j].wstring)==0)
