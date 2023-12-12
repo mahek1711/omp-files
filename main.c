@@ -417,13 +417,6 @@ int main (int argc, char *argv[])
         }
     }
 
-	#pragma omp parallel num_threads(threadCount)
-	{
-		int nthreads = omp_get_num_threads();
-		int thread_id = omp_get_thread_num();
-		printf("thread %d of %d checking in. \n", thread_id, nthreads);
-	}
-
     // Printing top 10 word with string length of six or more charcaters
     printf("\n\n");
     printf("Word Frequency Count on %s with %d threads\n",
