@@ -4,13 +4,14 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
+#include <pthread.h>
 #include <string.h>
 #include <omp.h>
 
 #define SIZE    50000   // Macro for Total Number of Words
 
 // You may find this Useful
-const char * delim = "\"\'.“”‘’?:;-,—*($%)! \t\n\x0A\r";
+char * delim = "\"\'.“”‘’?:;-,—*($%)! \t\n\x0A\r";
 
 // Structure to store the Word, it's frequency and Length
 struct wordlist {
@@ -20,8 +21,12 @@ struct wordlist {
 };
 
 struct wordlist word[SIZE]; // Array of Structure to Store Words
+pthread_mutex_t lock;  // Mutex Lcok Variable
 int fd;         // File Descriptor
+int threadCount;        // Thread Count
 long int fsize;         // File Size 
+long int chunkSize;     // Chunk Size to Read by Each Thread
+long int remainChunkSize; // Left Over Chunk Size to read by last thread
 int windex = 0;
 char *buffer;
 
@@ -52,52 +57,69 @@ void processWordsfromFile(long int fsize)
 
         bytes_read = read(fd, buffer, size);
 
-        char *rest = buffer;
-        char *token = strtok_r(rest, delim, &rest);
+        //char *rest = buffer;
+        //char *token = strtok_r(rest, delim, &rest);
 
-		int count = 0;
-		char *arr[SIZE];
-        for (; token; token = strtok_r(rest, delim, &rest)) {
-                if ((int)strlen(token) >= 6) {
-				arr[count] = token;
-				count++;
-               }
-        }
-    
-    #pragma omp parallel for
-	for(int i = 0; i < count; i++)
-	{
-        int j=0;
-		for(j=0;j<windex;j++)
-		{
-            if(strcmp(arr[i], word[j].wstring) == 0)
-            {
-                word[j].count++;
-                break;
-            }
-		}
-        if(j == windex){
-            strcpy(word[j].wstring, arr[i]);
-            word[j].len = strlen(word[j].wstring);
-            word[j].count++;
-            windex++;
-        }
-	}
-	
+        #pragma omp parallel
+        {
+                int nthreads = omp_get_num_threads();
+                printf("Total threads = %d\n",nthreads);
+                int thread_id = omp_get_thread_num();
+                printf("thread %d of %d checking in. \n", thread_id, nthreads);
+        //}
 
+                char *rest = buffer;
+                char *token = strtok_r(rest, delim, &rest);
+                #pragma omp for
+                for (;token; token = strtok_r(rest, delim, &rest)) {
+                        if ((int)strlen(token) >= 6) {
+                                if (windex == 0) {
+                                        strcpy(word[windex].wstring, token);
+                                        word[windex].len = strlen(word[windex].wstring);
+                                        word[windex].count++;
+                                         windex++;
+                                } else {
+                                        int res = -1;
+                                        for (int p = 0; p < windex; p++) {
+                                        res = strcmp(word[p].wstring, token);
+                                        if (res == 0) {
+                                                word[p].count++;
+                                                break;
+                                                }
+                                        }
+
+                                        if (res != 0) {
+                                                strcpy(word[windex].wstring, token);
+                                                word[windex].len = strlen(word[windex].wstring);
+                                                word[windex].count++;
+                                                windex++;
+                                        }
+                                }
+                        }
+                }
+        }
 }
 
-int main(int argc, char** argv){
-    #pragma omp parallel
-    {
-        printf("Hello from process: %d\n", omp_get_thread_num());
-    }
+int main (int argc, char *argv[])
+{
+    //***TO DO***  Look at arguments, open file, divide by threads
+    // Allocate and Initialize and storage structures
 
-    char fileName[] = "WarAndPeace.txt";
+    char fileName[20] = {'\0'};
 
     int error;
     size_t start_offset = 0;
     size_t end_offset = -1;
+
+    int m;
+
+    if(argc < 2) {
+                printf("Insufficient arguments on the command line\n");
+        exit(-1);
+    }
+
+    //threadCount = atoi(argv[2]);
+    strcpy(fileName, argv[1]);
 
         // Opening the File name to Read the Content
     fd = open(fileName, O_RDONLY);
@@ -120,6 +142,7 @@ int main(int argc, char** argv){
     fsize = end_offset - start_offset;
     printf("File Size: %ld byte\n", fsize);
 
+
     if (-1 == (start_offset = lseek(fd, 0, SEEK_SET))) {
         printf("lseek error\n");
     }
@@ -138,9 +161,13 @@ int main(int argc, char** argv){
 
     clock_gettime(CLOCK_REALTIME, &startTime);
     //**************************************************************
+    // *** TO DO ***  start your thread processing
+    //                wait for the threads to finish
+
 
     processWordsfromFile(fsize);
 
+        //Sorting Words in Descending Order Based on Frequency Count
     struct wordlist temp_storage;
     for (int m = 0; m < windex; m++)
     {
@@ -156,7 +183,8 @@ int main(int argc, char** argv){
 
     // Printing top 10 word with string length of six or more charcaters
     printf("\n\n");
-    printf("Word Frequency Count with %d threads\n", omp_get_num_threads());
+    printf("Word Frequency Count on %s with %d threads\n",
+                                        argv[1], threadCount);
     printf("Printing top 10 words 6 characters or more.\n");
 
     for (int p = 0; p < 10; p++)
@@ -182,11 +210,13 @@ int main(int argc, char** argv){
     printf("Total Time was %ld.%09ld seconds\n", sec, n_sec);
     //**************************************************************
 
+
+    // ***TO DO *** cleanup
     close(fd); // closing File Descriptors
     free(buffer); // Releasing Buffer
-    buffer = NULL;
+        buffer = NULL;
 
-    return 0;
-
-
+        return 0;
 }
+
+

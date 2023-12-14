@@ -8,7 +8,7 @@ CFLAGS=-fopenmp
 TARGET=main
 
 # Source files
-SRC=parallel.c
+SRC=main.c
 
 # Build rule
 $(TARGET): $(SRC)
