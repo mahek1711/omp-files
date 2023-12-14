@@ -1,0 +1,9 @@
+#To Run The Posix Parallel Implementation, there is seprate folder inside posix
+cd posix
+make
+./posix ../WarAndPeace.txt <pass_number_of_threads>
+
+
+#To Run the OpenMP Parallel Implementation, just do the make outside
+make
+./main
